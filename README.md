@@ -1,6 +1,21 @@
-# llm-classifiers
-
-Framework to build production-grade LLM-based classifiers
+<div align="center">
+  <a href="https://ai.pydantic.dev/">
+    <h1>
+        LLM Classifiers
+    </h1>
+  </a>
+</div>
+<div align="center">
+<p align="center">
+    <em>Framework to build production-grade LLM-based classifiers, super fast</em>
+</p>
+</div>
+<div align="center">
+  <a href="https://github.com/MoellerGroup/llm-classifiers/actions/workflows/publish.yml?query=branch%3Amain"><img src="https://img.shields.io/github/actions/workflow/status/moellergroup/llm-classifiers/publish.yml" alt="CI"></a>
+  <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/moellergroup/llm-classifiers"><img src="https://coverage-badge.samuelcolvin.workers.dev/moellergroup/llm-classifiers.svg" alt="Coverage"></a>
+  <a href="https://pypi.org/project/llm-classifiers" target="_blank"> <img src="https://img.shields.io/pypi/v/llm-classifiers" alt="Package version"></a>  
+  <a href="https://github.com/MoellerGroup/llm-classifiers/blob/main/LICENSE"><img src="https://img.shields.io/github/license/moellergroup/llm-classifiers" alt="license"></a>
+</div>
 
 ## :cop: How to contribute
 

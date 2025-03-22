@@ -8,7 +8,7 @@ test:
 	uv run pytest
 
 coverage:
-	uv run pytest --cov=llm_classifiers
+	uv run pytest --cov=llm_classifiers --cov-report json
 
 publish:
 	uv publish --token $(PYPI_TOKEN)
