@@ -136,7 +136,7 @@ ENV/
 env.bak/
 venv.bak/
 .idea/
-
+coverage.json
 # Spyder project settings
 .spyderproject
 .spyproject
