@@ -17,6 +17,16 @@
   <a href="https://github.com/MoellerGroup/llm-classifiers/blob/main/LICENSE"><img src="https://img.shields.io/github/license/moellergroup/llm-classifiers" alt="license"></a>
 </div>
 
+---
+
+**Source Code
+**: <a href="https://github.com/MoellerGroup/llm-classifiers" target="_blank">https://github.com/MoellerGroup/llm-classifiers</a>
+
+---
+
+`LLM-Classifiers` is a framework to build production-grade LLM-based classifiers, superfast. It is built on top of
+Pydantic and Pydantic-AI to provide a simple and easy-to-use interface to build and deploy LLM-based classifiers.
+
 ## :cop: How to contribute
 
 To contribute to this project, you should comply with the following guidelines.
