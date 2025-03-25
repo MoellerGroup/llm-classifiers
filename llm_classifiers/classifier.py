@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar, Generic
+from typing import Any, Dict, List, Optional, Type
 
 from pydantic import BaseModel
 from pydantic_ai import Agent
@@ -6,13 +6,10 @@ from pydantic_ai.models import Model
 from pydantic_ai.models.openai import OpenAIModel
 
 
-T = TypeVar('T', bound=BaseModel)
-
-
-class Example(Generic[T]):
+class Example:
     """Example for training a classifier."""
 
-    def __init__(self, input_text: str, output: T):
+    def __init__(self, input_text: str, output: BaseModel):
         """
         Initialize an example.
 
@@ -31,7 +28,7 @@ class Example(Generic[T]):
         }
 
 
-class Classifier(Generic[T]):
+class Classifier:
     """
     LLM-based classifier that enforces structured outputs.
 
@@ -41,7 +38,7 @@ class Classifier(Generic[T]):
 
     def __init__(
         self,
-        output_model: Type[T],
+        output_model: Type[BaseModel],
         model: Optional[Model] = None,
         system_prompt: Optional[str] = None
     ):
@@ -58,50 +55,37 @@ class Classifier(Generic[T]):
         self.model = model or OpenAIModel(model_name="gpt-3.5-turbo")
         self.system_prompt = system_prompt or "You are a classifier."
         self.agent = Agent(model=self.model)
-        self._examples: List[Example[T]] = []
+        self._examples: List[Example] = []
         self._is_configured = False
 
-    def add_example(self, input_text: str, output: T) -> "Classifier[T]":
+    def add_example(self, input_text: str, output: BaseModel) -> None:
         """
         Add a training example to guide the classifier.
 
         Args:
             input_text: The input text to classify.
             output: The expected classification output.
-
-        Returns:
-            The classifier instance for method chaining.
         """
         example = Example(input_text, output)
         self._examples.append(example)
         self._is_configured = False  # Need to reconfigure
-        return self
 
-    def add_examples(self, examples: List[Example[T]]) -> "Classifier[T]":
+    def add_examples(self, examples: List[Example]) -> None:
         """
         Add multiple training examples to guide the classifier.
 
         Args:
             examples: List of Example objects.
-
-        Returns:
-            The classifier instance for method chaining.
         """
         self._examples.extend(examples)
         self._is_configured = False  # Need to reconfigure
-        return self
 
-    def configure(
-        self, system_prompt: Optional[str] = None
-    ) -> "Classifier[T]":
+    def configure(self, system_prompt: Optional[str] = None) -> None:
         """
         Configure the agent with system prompt and examples.
 
         Args:
             system_prompt: Optional system prompt override.
-
-        Returns:
-            The classifier instance for method chaining.
         """
         prompt = system_prompt or self.system_prompt
 
@@ -115,9 +99,8 @@ class Classifier(Generic[T]):
         )
 
         self._is_configured = True
-        return self
 
-    def classify(self, text: str) -> T:
+    def classify(self, text: str) -> BaseModel:
         """
         Classify the input text according to the schema.
 

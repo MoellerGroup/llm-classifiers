@@ -3,7 +3,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 from pydantic_ai.models.openai import OpenAIModel
 
-from llm_classifiers.classifier import Classifier
+from llm_classifiers.classifier import Classifier, Example
 
 
 class SentimentClassification(BaseModel):
@@ -25,7 +25,7 @@ class SentimentClassification(BaseModel):
 def main():
     """Run a simple sentiment classification example."""
     # Initialize the classifier with our schema
-    model = OpenAIModel(model="gpt-3.5-turbo")
+    model = OpenAIModel(model_name="gpt-3.5-turbo")
     classifier = Classifier(
         output_model=SentimentClassification,
         model=model,
@@ -40,14 +40,18 @@ def main():
             confidence=0.95,
             reasoning="Uses strong positive language ('love', 'game changer') with exclamation marks."
         )
-    ).add_example(
+    )
+    
+    classifier.add_example(
         "This service is terrible. I've been waiting for hours and no one has helped me.",
         SentimentClassification(
             sentiment="negative",
             confidence=0.9,
             reasoning="Contains explicit negative language ('terrible') and describes a negative experience."
         )
-    ).add_example(
+    )
+    
+    classifier.add_example(
         "The product arrived on time. It works as described.",
         SentimentClassification(
             sentiment="neutral",
