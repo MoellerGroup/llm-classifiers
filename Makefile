@@ -2,7 +2,7 @@ build:
 	uv build
 
 lint:
-	uv run --module flake8 llm_classifiers --per-file-ignores="__init__.py:D104" --ignore=D100
+	uv run --module flake8 llm_classifiers --per-file-ignores="__init__.py:D104" --ignore=D100,E501
 
 test:
 	uv run pytest

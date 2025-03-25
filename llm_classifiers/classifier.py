@@ -23,7 +23,7 @@ class Example(logfire.LoggableModel):
 
 class ClassificationResult(logfire.LoggableModel):
     """Result of a classification operation for logging."""
-    
+
     input_text: str = Field(description="Input text that was classified")
     result: BaseModel = Field(description="Classification result")
     model_name: str = Field(description="Model used for classification")
@@ -61,7 +61,7 @@ class Classifier:
         self._examples: List[Example] = []
         self._is_configured = False
         self._enable_logging = enable_logging
-        
+
         if self._enable_logging:
             # Initialize logfire if not already initialized
             try:
@@ -70,7 +70,7 @@ class Classifier:
             except Exception:
                 # Logfire might be already initialized, continue silently
                 pass
-            
+
             # Log initialization
             logfire.log(
                 "Classifier initialized",
@@ -91,9 +91,9 @@ class Classifier:
         example = Example(input_text=input_text, output=output)
         self._examples.append(example)
         self._is_configured = False  # Need to reconfigure
-        
+
         if self._enable_logging:
-            logfire.log("Example added", 
+            logfire.log("Example added",
                         example_text=input_text,
                         example_model=output.__class__.__name__)
 
@@ -107,7 +107,7 @@ class Classifier:
         """
         self._examples.extend(examples)
         self._is_configured = False  # Need to reconfigure
-        
+
         if self._enable_logging:
             logfire.log("Multiple examples added", count=len(examples))
 
@@ -131,10 +131,10 @@ class Classifier:
         )
 
         self._is_configured = True
-        
+
         if self._enable_logging:
             logfire.log(
-                "Classifier configured", 
+                "Classifier configured",
                 examples_count=len(examples_dict),
                 system_prompt=prompt
             )
@@ -152,24 +152,25 @@ class Classifier:
         """
         if not self._is_configured:
             self.configure()
-            
+
         if self._enable_logging:
             # Log start of classification
             logfire.log("Starting classification", input_text=text)
-        
+
         # Execute the classification with timing if logging is enabled
         if self._enable_logging:
             with logfire.span("classification_execution"):
                 result = self.agent.run(text)
-                
+
             # Log the result using a structured model
+            model_name = getattr(self.model, "model_name", str(self.model))
             classification_result = ClassificationResult(
                 input_text=text,
                 result=result,
-                model_name=getattr(self.model, "model_name", str(self.model))
+                model_name=model_name
             )
             logfire.log("Classification completed", result=classification_result)
         else:
             result = self.agent.run(text)
-            
+
         return result
