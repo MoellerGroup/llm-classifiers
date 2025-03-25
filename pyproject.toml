@@ -11,6 +11,7 @@ dependencies = [
     "pydantic>=2.10.6",
     "pydantic-ai>=0.0.41",
     "pydantic-logfire>=0.0.1",
+    "pandas>=2.0.0",
 ]
 
 [dependency-groups]
